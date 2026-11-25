@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VE2B IA Vocab Master — VEN2302 &amp; VEN2602 Vocabulary List 2</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-cream: #FFFBF5;
+      --surface-ivory: #FFFFFF;
+      --sunset-coral: #F26B3A;
+      --sunset-hover: #D95829;
+      --honey-gold: #F7B538;
+      --sage-leaf: #388E3C;
+      --espresso: #2D2424;
+      --muted-brown: #6E5D5D;
+      --warm-border: #F0E4D7;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Nunito', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-cream);
+      color: var(--espresso);
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    .card-shadow {
+      box-shadow: 0 12px 30px rgba(242, 107, 58, 0.08);
+    }
+
+    .soft-shadow {
+      box-shadow: 0 4px 14px rgba(45, 36, 36, 0.05);
+    }
+
+    @keyframes pulse-ring {
+      0% { box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.45); }
+      70% { box-shadow: 0 0 0 14px rgba(211, 47, 47, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(211, 47, 47, 0); }
+    }
+
+    .mic-active {
+      background-color: #D32F2F !important;
+      animation: pulse-ring 1.3s infinite;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.95); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .animate-pop {
+      animation: popIn 0.25s ease-out forwards;
+    }
+
+    /* Custom scrollbar for word drawer */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #FFF8F0;
+      border-radius: 999px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #E4D2C1;
+      border-radius: 999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #D0B8A3;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-orange-200 selection:text-orange-950">
+
+  <!-- Top Header -->
+  <header class="w-full max-w-5xl mx-auto px-4 sm:px-6 pt-5 pb-3 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#F26B3A] to-[#F7B538] flex items-center justify-center text-2xl shadow-md">
+        🌻
+      </div>
+      <div>
+        <h1 class="text-xl sm:text-2xl font-black tracking-tight text-[#2D2424] leading-tight">
+          VE2B IA Vocab Master
+        </h1>
+        <p class="text-xs sm:text-sm font-bold text-[#6E5D5D]">
+          VEN2302 &amp; VEN2602 Vocabulary List 2
+        </p>
+      </div>
+    </div>
+
+    <!-- Stats Pills -->
+    <div class="flex items-center gap-2.5 flex-wrap justify-center">
+      <div class="bg-[#FFFBEB] border-2 border-[#F7B538] text-[#9A6700] px-3.5 py-1.5 rounded-full font-extrabold text-sm flex items-center gap-1.5 shadow-sm">
+        <span>⭐</span> <span id="xp-display">0</span> XP
+      </div>
+      <div class="bg-white border-2 border-[#F0E4D7] text-[#2D2424] px-3.5 py-1.5 rounded-full font-extrabold text-sm flex items-center gap-1.5 shadow-sm">
+        <span>🌻</span> Mastered: <span id="mastered-display" class="text-[#388E3C]">0</span>/<span id="total-display">125</span>
+      </div>
+      <div class="bg-[#FFF8F0] border-2 border-[#FFD2B8] text-[#B45309] px-3.5 py-1.5 rounded-full font-extrabold text-sm flex items-center gap-1.5 shadow-sm">
+        <span>🌱</span> Still Learning: <span id="learning-display">125</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="w-full max-w-5xl mx-auto px-4 sm:px-6 pb-16">
+
+    <!-- Encouraging Banner -->
+    <div id="encouragement-banner" class="bg-gradient-to-r from-[#FFF4E6] via-[#FFF9EC] to-[#F2FBF2] border-2 border-[#F0E4D7] rounded-2xl px-4 py-2.5 mb-5 flex items-center justify-between gap-3 text-sm font-bold text-[#5C4949]">
+      <div class="flex items-center gap-2">
+        <span class="text-lg">☀️</span>
+        <span id="encouragement-text">Take it one word at a time—listen clearly, speak aloud, and move every word into Mastered!</span>
+      </div>
+      <button onclick="newEncouragement()" class="text-xs text-[#F26B3A] hover:underline shrink-0 cursor-pointer font-extrabold">New Tip</button>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <nav class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-5" aria-label="Study Modes">
+      <button id="tab-study" onclick="switchMode('study')" class="mode-tab active bg-[#F26B3A] text-white border-2 border-[#F26B3A] py-3 px-4 rounded-2xl font-extrabold text-sm sm:text-base flex items-center justify-center gap-2 transition shadow-sm cursor-pointer">
+        <span>📖</span> Study &amp; Speak
+      </button>
+      <button id="tab-sprint" onclick="switchMode('sprint')" class="mode-tab bg-white text-[#2D2424] border-2 border-[#F0E4D7] hover:border-[#F26B3A] py-3 px-4 rounded-2xl font-extrabold text-sm sm:text-base flex items-center justify-center gap-2 transition cursor-pointer">
+        <span>⚡</span> POS Sprint
+      </button>
+      <button id="tab-match" onclick="switchMode('match')" class="mode-tab bg-white text-[#2D2424] border-2 border-[#F0E4D7] hover:border-[#F26B3A] py-3 px-4 rounded-2xl font-extrabold text-sm sm:text-base flex items-center justify-center gap-2 transition cursor-pointer">
+        <span>🎯</span> Meaning Match
+      </button>
+      <button id="tab-list" onclick="switchMode('list')" class="mode-tab bg-white text-[#2D2424] border-2 border-[#F0E4D7] hover:border-[#F26B3A] py-3 px-4 rounded-2xl font-extrabold text-sm sm:text-base flex items-center justify-center gap-2 transition cursor-pointer">
+        <span>📋</span> Word List
+      </button>
+    </nav>
+
+    <!-- Part of Speech Filter Bar -->
+    <div id="pos-filter-bar" class="flex items-center gap-2 flex-wrap mb-6">
+      <span class="text-xs font-extrabold uppercase tracking-wider text-[#6E5D5D] mr-1">Filter POS:</span>
+      <button onclick="setPOSFilter('All')" id="filter-All" class="pos-filter-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-extrabold border-2 border-[#2D2424] bg-[#EFE6DD] text-[#2D2424] transition cursor-pointer">
+        All (125)
+      </button>
+      <button onclick="setPOSFilter('Noun')" id="filter-Noun" class="pos-filter-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-extrabold border-2 border-transparent bg-[#FEF3C7] text-[#B45309] opacity-85 hover:opacity-100 transition cursor-pointer">
+        Noun (66)
+      </button>
+      <button onclick="setPOSFilter('Adjective')" id="filter-Adjective" class="pos-filter-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-extrabold border-2 border-transparent bg-[#FFEDD5] text-[#C2410C] opacity-85 hover:opacity-100 transition cursor-pointer">
+        Adjective (30)
+      </button>
+      <button onclick="setPOSFilter('Verb')" id="filter-Verb" class="pos-filter-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-extrabold border-2 border-transparent bg-[#FEE2E2] text-[#B91C1C] opacity-85 hover:opacity-100 transition cursor-pointer">
+        Verb (27)
+      </button>
+      <button onclick="setPOSFilter('Preposition')" id="filter-Preposition" class="pos-filter-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-extrabold border-2 border-transparent bg-[#E0E7FF] text-[#3730A3] opacity-85 hover:opacity-100 transition cursor-pointer">
+        Preposition (2)
+      </button>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- MODE 1: STUDY & PRONOUNCE STUDIO                          -->
+    <!-- ========================================================= -->
+    <section id="view-study" class="bg-white border-2 border-[#F0E4D7] rounded-3xl p-6 sm:p-10 card-shadow animate-pop">
+      <!-- Top Card Metadata -->
+      <div class="flex items-center justify-between gap-2 flex-wrap mb-4">
+        <div class="flex items-center gap-2">
+          <span id="study-pos-badge" class="px-3.5 py-1 rounded-full text-xs sm:text-sm font-extrabold bg-[#FEF3C7] text-[#B45309]">
+            Noun
+          </span>
+          <span id="study-stage-badge" class="px-3 py-1 rounded-full text-xs font-extrabold bg-[#FFF8F0] border border-[#FFD2B8] text-[#B45309]">
+            🌱 Still Learning
+          </span>
+        </div>
+        <div class="text-xs sm:text-sm font-extrabold text-[#6E5D5D]">
+          Card <span id="study-counter" class="text-[#2D2424]">1 of 125</span>
+        </div>
+      </div>
+
+      <!-- Dual POS Note (specifically helpful for 'reward') -->
+      <div id="dual-pos-note" class="hidden mb-4 bg-[#FFFBEB] border border-[#F7B538] text-[#9A6700] rounded-2xl px-4 py-2 text-xs sm:text-sm font-bold flex items-center justify-center gap-2">
+        <span>💡</span>
+        <span>Dual-Role Word: <strong>"reward"</strong> appears in both the <strong>Noun</strong> and <strong>Verb</strong> lists!</span>
+      </div>
+
+      <!-- Headword & Syllables -->
+      <div class="text-center my-4">
+        <h2 id="study-word" class="text-4xl sm:text-5xl font-black text-[#2D2424] tracking-tight mb-1.5">
+          accessory
+        </h2>
+        <p id="study-syllables" class="text-base sm:text-lg font-bold text-[#F26B3A] tracking-wide">
+          ac · ces · so · ry
+        </p>
+        <p id="audio-source-tag" class="text-[11px] font-bold text-[#6E5D5D] mt-1">
+          🔊 Crisp Clear Pronunciation Ready
+        </p>
+      </div>
+
+      <!-- Audio & Pronunciation Controls -->
+      <div class="flex items-center justify-center gap-3 flex-wrap my-6">
+        <button onclick="speakCurrentWord(1.0)" class="bg-[#FFF0E6] hover:bg-[#FFE2D0] text-[#F26B3A] border-2 border-[#FFD2B8] px-4 py-3 rounded-2xl font-extrabold text-sm sm:text-base flex items-center gap-2 transition cursor-pointer">
+          <span>🔊</span> Listen (Normal)
+        </button>
+        <button onclick="speakCurrentWord(0.65)" class="bg-[#FFF8F0] hover:bg-[#F7EBDD] text-[#6E5D5D] border-2 border-[#E6D5C3] px-4 py-3 rounded-2xl font-extrabold text-sm sm:text-base flex items-center gap-2 transition cursor-pointer">
+          <span>🐢</span> Slow (0.65x)
+        </button>
+        <button id="mic-btn" onclick="startPronunciationCheck()" class="bg-[#F26B3A] hover:bg-[#D95829] text-white px-5 py-3 rounded-2xl font-extrabold text-sm sm:text-base flex items-center gap-2 shadow-md transition cursor-pointer">
+          <span>🎙️</span> Speak &amp; Check
+        </button>
+      </div>
+
+      <!-- Pronunciation Feedback Box -->
+      <div id="pronounce-feedback" class="min-h-[28px] text-center font-extrabold text-sm sm:text-base mb-5 px-3"></div>
+
+      <!-- Chinese Meaning Box (Chinese ONLY) -->
+      <div class="bg-[#FFFBF5] border-2 border-[#F0E4D7] rounded-2xl p-6 sm:p-7 text-center">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-extrabold uppercase tracking-wider text-[#F26B3A]">中文釋義 (Chinese Meaning)</span>
+          <button onclick="toggleMeaningVisibility()" id="toggle-meaning-btn" class="text-xs font-extrabold text-[#6E5D5D] hover:text-[#F26B3A] bg-white border border-[#E6D5C3] px-2.5 py-1 rounded-lg transition cursor-pointer">
+            👁️ Hide Meaning (Self-Test)
+          </button>
+        </div>
+        <p id="study-meaning" class="text-2xl sm:text-3xl font-black text-[#2D2424] tracking-wide py-2">
+          配件；飾品
+        </p>
+        <p id="study-meaning-masked" class="hidden text-lg font-bold text-[#6E5D5D] italic py-3">
+          (Meaning hidden — try to recall the Chinese meaning, then click Show!)
+        </p>
+      </div>
+
+      <!-- Card Navigation & Mastery Status Toggle -->
+      <div class="flex items-center justify-between gap-3 flex-wrap mt-7">
+        <button onclick="prevCard()" class="bg-[#FFF8F0] hover:bg-[#F5E8D8] text-[#2D2424] border-2 border-[#E6D5C3] px-5 py-3 rounded-2xl font-extrabold text-sm sm:text-base transition cursor-pointer">
+          ← Previous
+        </button>
+
+        <button id="mark-bloomed-btn" onclick="toggleManualMastery()" class="bg-[#F2FBF2] hover:bg-[#E1F5E1] text-[#388E3C] border-2 border-[#B7E1B9] px-4 py-3 rounded-2xl font-extrabold text-sm transition cursor-pointer">
+          🌻 Mark as Mastered (+10 XP)
+        </button>
+
+        <button onclick="nextCard()" class="bg-[#F26B3A] hover:bg-[#D95829] text-white px-6 py-3 rounded-2xl font-extrabold text-sm sm:text-base shadow-sm transition cursor-pointer">
+          Next Word →
+        </button>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- MODE 2: PART OF SPEECH SPRINT GAME                        -->
+    <!-- ========================================================= -->
+    <section id="view-sprint" class="hidden bg-white border-2 border-[#F0E4D7] rounded-3xl p-6 sm:p-10 card-shadow text-center animate-pop">
+      <div class="flex items-center justify-between flex-wrap gap-2 mb-6">
+        <span class="bg-[#FFF0E6] text-[#F26B3A] px-3.5 py-1.5 rounded-full font-extrabold text-sm">
+          ⚡ POS Classification Sprint
+        </span>
+        <div class="flex items-center gap-3">
+          <span class="bg-[#FFFBEB] border border-[#F7B538] text-[#9A6700] px-3.5 py-1.5 rounded-full font-extrabold text-sm">
+            🔥 Streak: <span id="sprint-streak">0</span>
+          </span>
+          <span class="bg-[#F8F4F0] text-[#6E5D5D] px-3.5 py-1.5 rounded-full font-extrabold text-sm">
+            Best: <span id="sprint-best">0</span>
+          </span>
+        </div>
+      </div>
+
+      <p class="text-sm font-bold text-[#6E5D5D] mb-2">Which Part of Speech does this word belong to in VEN2302 / VEN2602 List 2?</p>
+
+      <div class="my-6 flex flex-col items-center justify-center">
+        <div class="flex items-center gap-3">
+          <h2 id="sprint-word" class="text-4xl sm:text-5xl font-black text-[#2D2424]">accessory</h2>
+          <button onclick="playPronunciation(currentSprintWord.word, 1.0)" title="Listen" class="w-11 h-11 rounded-full bg-[#FFF0E6] text-[#F26B3A] hover:bg-[#FFE0CC] flex items-center justify-center text-lg transition cursor-pointer">
+            🔊
+          </button>
+        </div>
+        <p id="sprint-syllables" class="text-sm font-bold text-[#F26B3A] mt-1">ac · ces · so · ry</p>
+      </div>
+
+      <!-- 4 POS Choices -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 max-w-2xl mx-auto mt-6">
+        <button onclick="submitSprintAnswer('Noun')" class="sprint-choice-btn p-4 rounded-2xl border-2 border-[#FDE68A] bg-[#FFFBEB] hover:bg-[#FEF3C7] text-[#B45309] font-black text-lg flex items-center justify-center gap-2.5 transition transform hover:-translate-y-0.5 cursor-pointer">
+          <span>🟡</span> Noun
+        </button>
+        <button onclick="submitSprintAnswer('Adjective')" class="sprint-choice-btn p-4 rounded-2xl border-2 border-[#FED7AA] bg-[#FFF7ED] hover:bg-[#FFEDD5] text-[#C2410C] font-black text-lg flex items-center justify-center gap-2.5 transition transform hover:-translate-y-0.5 cursor-pointer">
+          <span>🟠</span> Adjective
+        </button>
+        <button onclick="submitSprintAnswer('Verb')" class="sprint-choice-btn p-4 rounded-2xl border-2 border-[#FECACA] bg-[#FEF2F2] hover:bg-[#FEE2E2] text-[#B91C1C] font-black text-lg flex items-center justify-center gap-2.5 transition transform hover:-translate-y-0.5 cursor-pointer">
+          <span>🔴</span> Verb
+        </button>
+        <button onclick="submitSprintAnswer('Preposition')" class="sprint-choice-btn p-4 rounded-2xl border-2 border-[#C7D2FE] bg-[#EEF2FF] hover:bg-[#E0E7FF] text-[#3730A3] font-black text-lg flex items-center justify-center gap-2.5 transition transform hover:-translate-y-0.5 cursor-pointer">
+          <span>🔵</span> Preposition
+        </button>
+      </div>
+
+      <div id="sprint-feedback" class="min-h-[32px] mt-6 font-extrabold text-base"></div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- MODE 3: MEANING MATCH QUIZ (CHINESE MEANINGS ONLY)        -->
+    <!-- ========================================================= -->
+    <section id="view-match" class="hidden bg-white border-2 border-[#F0E4D7] rounded-3xl p-6 sm:p-10 card-shadow animate-pop">
+      <div class="flex items-center justify-between flex-wrap gap-2 mb-6">
+        <div class="flex items-center gap-2">
+          <span class="bg-[#FFF0E6] text-[#F26B3A] px-3.5 py-1.5 rounded-full font-extrabold text-sm">
+            🎯 Meaning Match (中文釋義配對)
+          </span>
+          <span id="match-pos-badge" class="px-3 py-1 rounded-full text-xs font-extrabold bg-[#FEF3C7] text-[#B45309]">
+            Noun
+          </span>
+        </div>
+        <span class="text-sm font-extrabold text-[#6E5D5D]">
+          Score: <span id="match-score" class="text-[#388E3C]">0</span>
+        </span>
+      </div>
+
+      <div class="text-center my-5">
+        <p class="text-xs font-extrabold uppercase tracking-wider text-[#6E5D5D] mb-1">Select the matching Chinese meaning for</p>
+        <div class="flex items-center justify-center gap-3">
+          <h2 id="match-word" class="text-3xl sm:text-5xl font-black text-[#2D2424]">accessory</h2>
+          <button onclick="playPronunciation(currentMatchWord.word, 1.0)" class="w-11 h-11 rounded-full bg-[#FFF0E6] text-[#F26B3A] hover:bg-[#FFE0CC] flex items-center justify-center text-lg transition cursor-pointer">
+            🔊
+          </button>
+        </div>
+      </div>
+
+      <div id="match-options" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 max-w-2xl mx-auto mt-6">
+        <!-- Populated dynamically with Chinese meanings -->
+      </div>
+
+      <div id="match-feedback" class="min-h-[32px] mt-6 text-center font-extrabold text-base"></div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- MODE 4: WORD PROGRESS LIST (MASTERED VS. STILL LEARNING)  -->
+    <!-- ========================================================= -->
+    <section id="view-list" class="hidden bg-white border-2 border-[#F0E4D7] rounded-3xl p-6 sm:p-8 card-shadow animate-pop">
+      <!-- Top Summary Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#F0E4D7]">
+        <div>
+          <h2 class="text-2xl font-black text-[#2D2424] flex items-center gap-2">
+            <span>📋</span> Student Word List &amp; Mastery Tracker
+          </h2>
+          <p class="text-sm font-bold text-[#6E5D5D] mt-1">
+            Track which words are <span class="text-[#388E3C] font-extrabold">🌻 Mastered</span> and which are <span class="text-[#B45309] font-extrabold">🌱 Still Learning</span>. Click any status badge to toggle!
+          </p>
+        </div>
+        <button id="reset-progress-btn" onclick="resetProgressConfirm()" class="self-start sm:self-auto text-xs font-extrabold text-[#6E5D5D] hover:text-[#D32F2F] border-2 border-[#E6D5C3] px-3.5 py-2 rounded-xl transition cursor-pointer">
+          Reset Progress
+        </button>
+      </div>
+
+      <!-- Summary Stat Cards -->
+      <div class="grid grid-cols-3 gap-3 my-5">
+        <div class="bg-[#FFFBF5] border-2 border-[#F0E4D7] rounded-2xl p-3.5 text-center">
+          <div class="text-xs font-extrabold uppercase text-[#6E5D5D]">Total Words</div>
+          <div class="text-2xl sm:text-3xl font-black text-[#2D2424] mt-0.5">125</div>
+        </div>
+        <div class="bg-[#F2FBF2] border-2 border-[#B7E1B9] rounded-2xl p-3.5 text-center">
+          <div class="text-xs font-extrabold uppercase text-[#388E3C]">🌻 Mastered</div>
+          <div id="list-stat-mastered" class="text-2xl sm:text-3xl font-black text-[#388E3C] mt-0.5">0</div>
+        </div>
+        <div class="bg-[#FFF8F0] border-2 border-[#FFD2B8] rounded-2xl p-3.5 text-center">
+          <div class="text-xs font-extrabold uppercase text-[#B45309]">🌱 Still Learning</div>
+          <div id="list-stat-learning" class="text-2xl sm:text-3xl font-black text-[#B45309] mt-0.5">125</div>
+        </div>
+      </div>
+
+      <!-- Filter Controls: Status + POS + Search -->
+      <div class="space-y-3 mb-5">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <!-- Mastery Status Filter -->
+          <div class="flex items-center gap-2 flex-wrap">
+            <button onclick="setListStatusFilter('all')" id="status-filter-all" class="status-filter-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-extrabold bg-[#2D2424] text-white transition cursor-pointer">
+              All (125)
+            </button>
+            <button onclick="setListStatusFilter('mastered')" id="status-filter-mastered" class="status-filter-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-extrabold bg-[#F2FBF2] text-[#388E3C] border border-[#B7E1B9] transition cursor-pointer">
+              🌻 Mastered (<span id="filter-count-mastered">0</span>)
+            </button>
+            <button onclick="setListStatusFilter('learning')" id="status-filter-learning" class="status-filter-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-extrabold bg-[#FFF8F0] text-[#B45309] border border-[#FFD2B8] transition cursor-pointer">
+              🌱 Still Learning (<span id="filter-count-learning">125</span>)
+            </button>
+          </div>
+
+          <!-- Search Input -->
+          <input type="text" id="list-search" oninput="renderWordList()" placeholder="🔍 Search English or 中文..." class="bg-[#FFFBF5] border-2 border-[#F0E4D7] focus:border-[#F26B3A] outline-none rounded-xl px-4 py-2 text-sm font-bold text-[#2D2424] w-full sm:w-64" />
+        </div>
+
+        <!-- Secondary POS Filter inside Word List -->
+        <div class="flex items-center gap-1.5 flex-wrap">
+          <span class="text-xs font-extrabold text-[#6E5D5D] mr-1">POS:</span>
+          <button onclick="setListPOSFilter('All')" id="list-pos-All" class="list-pos-btn px-3 py-1 rounded-full text-xs font-extrabold bg-[#EFE6DD] text-[#2D2424] border border-[#2D2424] cursor-pointer">All</button>
+          <button onclick="setListPOSFilter('Noun')" id="list-pos-Noun" class="list-pos-btn px-3 py-1 rounded-full text-xs font-extrabold bg-[#FEF3C7] text-[#B45309] border border-transparent cursor-pointer">Noun</button>
+          <button onclick="setListPOSFilter('Adjective')" id="list-pos-Adjective" class="list-pos-btn px-3 py-1 rounded-full text-xs font-extrabold bg-[#FFEDD5] text-[#C2410C] border border-transparent cursor-pointer">Adjective</button>
+          <button onclick="setListPOSFilter('Verb')" id="list-pos-Verb" class="list-pos-btn px-3 py-1 rounded-full text-xs font-extrabold bg-[#FEE2E2] text-[#B91C1C] border border-transparent cursor-pointer">Verb</button>
+          <button onclick="setListPOSFilter('Preposition')" id="list-pos-Preposition" class="list-pos-btn px-3 py-1 rounded-full text-xs font-extrabold bg-[#E0E7FF] text-[#3730A3] border border-transparent cursor-pointer">Preposition</button>
+        </div>
+      </div>
+
+      <!-- Word Progress Rows -->
+      <div id="word-list-container" class="space-y-2.5 max-h-[520px] overflow-y-auto pr-1">
+        <!-- Populated dynamically -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Custom Toast Notification (No alert() used) -->
+  <div id="toast-box" class="fixed bottom-5 left-1/2 -translate-x-1/2 bg-[#2D2424] text-white px-5 py-3 rounded-2xl font-extrabold text-sm shadow-xl z-50 hidden items-center gap-2 transition-all">
+    <span id="toast-icon">✨</span>
+    <span id="toast-msg">Message</span>
+  </div>
+
+  <script>
+    // =========================================================================
+    // COMPLETE VEN2302 & VEN2602 VOCABULARY LIST 2 DATA (CHINESE MEANINGS ONLY)
+    // 66 Nouns + 30 Adjectives + 27 Unique Verbs + 2 Prepositions = 125 unique entries
+    // =========================================================================
+    const VOCAB_DATA = [
+      // --- NOUNS (66) ---
+      { id: "n1", word: "accessory", pos: "Noun", syllables: "ac · ces · so · ry", meaning: "配件；飾品" },
+      { id: "n2", word: "accommodation", pos: "Noun", syllables: "ac · com · mo · da · tion", meaning: "住宿；膳宿" },
+      { id: "n3", word: "advertising", pos: "Noun", syllables: "ad · ver · tis · ing", meaning: "廣告；廣告業" },
+      { id: "n4", word: "approval", pos: "Noun", syllables: "ap · prov · al", meaning: "批准；認可" },
+      { id: "n5", word: "atmosphere", pos: "Noun", syllables: "at · mos · phere", meaning: "氣氛；氛圍" },
+      { id: "n6", word: "attention", pos: "Noun", syllables: "at · ten · tion", meaning: "注意；關注" },
+      { id: "n7", word: "award", pos: "Noun", syllables: "a · ward", meaning: "獎項；獎品" },
+      { id: "n8", word: "backpack", pos: "Noun", syllables: "back · pack", meaning: "背包" },
+      { id: "n9", word: "benefit", pos: "Noun", syllables: "ben · e · fit", meaning: "益處；福利" },
+      { id: "n10", word: "booth", pos: "Noun", syllables: "booth", meaning: "攤位；展位" },
+      { id: "n11", word: "bonus", pos: "Noun", syllables: "bo · nus", meaning: "獎金；額外津貼" },
+      { id: "n12", word: "branch", pos: "Noun", syllables: "branch", meaning: "分店；分支機構" },
+      { id: "n13", word: "campaign", pos: "Noun", syllables: "cam · paign", meaning: "宣傳活動；推廣運動" },
+      { id: "n14", word: "chance", pos: "Noun", syllables: "chance", meaning: "機會；可能性" },
+      { id: "n15", word: "charge", pos: "Noun", syllables: "charge", meaning: "收費；費用" },
+      { id: "n16", word: "coach", pos: "Noun", syllables: "coach", meaning: "教練；長途客車" },
+      { id: "n17", word: "commitment", pos: "Noun", syllables: "com · mit · ment", meaning: "承諾；投入" },
+      { id: "n18", word: "communication", pos: "Noun", syllables: "com · mu · ni · ca · tion", meaning: "溝通；交流" },
+      { id: "n19", word: "consultation", pos: "Noun", syllables: "con · sul · ta · tion", meaning: "諮詢；磋商" },
+      { id: "n20", word: "coordination", pos: "Noun", syllables: "co · or · di · na · tion", meaning: "協調；配合" },
+      { id: "n21", word: "delivery", pos: "Noun", syllables: "de · liv · er · y", meaning: "送貨；遞送" },
+      { id: "n22", word: "demand", pos: "Noun", syllables: "de · mand", meaning: "需求；要求" },
+      { id: "n23", word: "development", pos: "Noun", syllables: "de · vel · op · ment", meaning: "發展；開發" },
+      { id: "n24", word: "discussion", pos: "Noun", syllables: "dis · cus · sion", meaning: "討論；商議" },
+      { id: "n25", word: "education", pos: "Noun", syllables: "ed · u · ca · tion", meaning: "教育；培訓" },
+      { id: "n26", word: "efficiency", pos: "Noun", syllables: "ef · fi · cien · cy", meaning: "效率；效能" },
+      { id: "n27", word: "effort", pos: "Noun", syllables: "ef · fort", meaning: "努力；盡力" },
+      { id: "n28", word: "entertainment", pos: "Noun", syllables: "en · ter · tain · ment", meaning: "娛樂；款待" },
+      { id: "n29", word: "expo", pos: "Noun", syllables: "ex · po", meaning: "博覽會；展覽會" },
+      { id: "n30", word: "freebie", pos: "Noun", syllables: "free · bie", meaning: "免費贈品" },
+      { id: "n31", word: "funding", pos: "Noun", syllables: "fund · ing", meaning: "資金；撥款" },
+      { id: "n32", word: "image", pos: "Noun", syllables: "im · age", meaning: "形象；圖像" },
+      { id: "n33", word: "incentive", pos: "Noun", syllables: "in · cen · tive", meaning: "激勵；誘因" },
+      { id: "n34", word: "itinerary", pos: "Noun", syllables: "i · tin · er · ar · y", meaning: "行程表；路線" },
+      { id: "n35", word: "marketing", pos: "Noun", syllables: "mar · ket · ing", meaning: "市場推廣；營銷" },
+      { id: "n36", word: "operation", pos: "Noun", syllables: "op · er · a · tion", meaning: "運作；營運" },
+      { id: "n37", word: "package", pos: "Noun", syllables: "pack · age", meaning: "套票；包裹" },
+      { id: "n38", word: "participant", pos: "Noun", syllables: "par · tic · i · pant", meaning: "參加者；參與者" },
+      { id: "n39", word: "participation", pos: "Noun", syllables: "par · tic · i · pa · tion", meaning: "參與；參加" },
+      { id: "n40", word: "performer", pos: "Noun", syllables: "per · form · er", meaning: "表演者；演出者" },
+      { id: "n41", word: "person", pos: "Noun", syllables: "per · son", meaning: "人；個人" },
+      { id: "n42", word: "procedure", pos: "Noun", syllables: "pro · ce · dure", meaning: "程序；步驟" },
+      { id: "n43", word: "publicity", pos: "Noun", syllables: "pub · lic · i · ty", meaning: "宣傳；公眾關注" },
+      { id: "n44", word: "purchase", pos: "Noun", syllables: "pur · chase", meaning: "購買；採購品" },
+      { id: "n45", word: "refund", pos: "Noun", syllables: "re · fund", meaning: "退款" },
+      { id: "n46", word: "restaurant", pos: "Noun", syllables: "res · tau · rant", meaning: "餐廳；飯店" },
+      { id: "n47", word: "reward", pos: "Noun", syllables: "re · ward", meaning: "獎勵；報酬", dualNote: true },
+      { id: "n48", word: "sample", pos: "Noun", syllables: "sam · ple", meaning: "樣品；試用品" },
+      { id: "n49", word: "schedule", pos: "Noun", syllables: "sched · ule", meaning: "時間表；日程安排" },
+      { id: "n50", word: "session", pos: "Noun", syllables: "ses · sion", meaning: "場次；時段；會議" },
+      { id: "n51", word: "snack", pos: "Noun", syllables: "snack", meaning: "小吃；點心" },
+      { id: "n52", word: "software", pos: "Noun", syllables: "soft · ware", meaning: "軟件" },
+      { id: "n53", word: "space", pos: "Noun", syllables: "space", meaning: "空間；場地" },
+      { id: "n54", word: "speech", pos: "Noun", syllables: "speech", meaning: "演講；發言" },
+      { id: "n55", word: "sportswear", pos: "Noun", syllables: "sports · wear", meaning: "運動服裝" },
+      { id: "n56", word: "staff", pos: "Noun", syllables: "staff", meaning: "員工；全體職員" },
+      { id: "n57", word: "supplier", pos: "Noun", syllables: "sup · pli · er", meaning: "供應商" },
+      { id: "n58", word: "target", pos: "Noun", syllables: "tar · get", meaning: "目標；對象" },
+      { id: "n59", word: "tasting", pos: "Noun", syllables: "tast · ing", meaning: "品嚐（會）；試吃" },
+      { id: "n60", word: "telephone", pos: "Noun", syllables: "tel · e · phone", meaning: "電話" },
+      { id: "n61", word: "towel", pos: "Noun", syllables: "tow · el", meaning: "毛巾" },
+      { id: "n62", word: "trainer", pos: "Noun", syllables: "train · er", meaning: "培訓師；教練" },
+      { id: "n63", word: "travel", pos: "Noun", syllables: "trav · el", meaning: "旅行；旅遊" },
+      { id: "n64", word: "treatment", pos: "Noun", syllables: "treat · ment", meaning: "待遇；療程；處理" },
+      { id: "n65", word: "trip", pos: "Noun", syllables: "trip", meaning: "短途旅行；行程" },
+      { id: "n66", word: "venue", pos: "Noun", syllables: "ven · ue", meaning: "場地；舉辦地點" },
+
+      // --- ADJECTIVES (30) ---
+      { id: "a1", word: "additional", pos: "Adjective", syllables: "ad · di · tion · al", meaning: "額外的；附加的" },
+      { id: "a2", word: "annual", pos: "Adjective", syllables: "an · nu · al", meaning: "每年的；年度的" },
+      { id: "a3", word: "appealing", pos: "Adjective", syllables: "ap · peal · ing", meaning: "吸引人的；有感染力的" },
+      { id: "a4", word: "bulk", pos: "Adjective", syllables: "bulk", meaning: "大批的；散裝的" },
+      { id: "a5", word: "comfortable", pos: "Adjective", syllables: "com · fort · a · ble", meaning: "舒適的；自在的" },
+      { id: "a6", word: "complicated", pos: "Adjective", syllables: "com · pli · cat · ed", meaning: "複雜的；難懂的" },
+      { id: "a7", word: "easy", pos: "Adjective", syllables: "ea · sy", meaning: "容易的；輕鬆的" },
+      { id: "a8", word: "effective", pos: "Adjective", syllables: "ef · fec · tive", meaning: "有效的；生效的" },
+      { id: "a9", word: "enjoyable", pos: "Adjective", syllables: "en · joy · a · ble", meaning: "愉快的；有樂趣的" },
+      { id: "a10", word: "exciting", pos: "Adjective", syllables: "ex · cit · ing", meaning: "令人興奮的；刺激的" },
+      { id: "a11", word: "extra", pos: "Adjective", syllables: "ex · tra", meaning: "額外的；另外的" },
+      { id: "a12", word: "eye-catching", pos: "Adjective", syllables: "eye - catch · ing", meaning: "搶眼的；引人注目的" },
+      { id: "a13", word: "frequent", pos: "Adjective", syllables: "fre · quent", meaning: "頻繁的；經常的" },
+      { id: "a14", word: "heavy", pos: "Adjective", syllables: "heav · y", meaning: "重的；沉重的" },
+      { id: "a15", word: "informative", pos: "Adjective", syllables: "in · form · a · tive", meaning: "提供豐富資訊的；增長見聞的" },
+      { id: "a16", word: "insufficient", pos: "Adjective", syllables: "in · suf · fi · cient", meaning: "不足的；不夠的" },
+      { id: "a17", word: "interesting", pos: "Adjective", syllables: "in · ter · est · ing", meaning: "有趣的；吸引人的" },
+      { id: "a18", word: "latest", pos: "Adjective", syllables: "lat · est", meaning: "最新的；最近的" },
+      { id: "a19", word: "less", pos: "Adjective", syllables: "less", meaning: "較少的；更少的" },
+      { id: "a20", word: "low", pos: "Adjective", syllables: "low", meaning: "低的；矮的" },
+      { id: "a21", word: "loyal", pos: "Adjective", syllables: "loy · al", meaning: "忠誠的；忠實的" },
+      { id: "a22", word: "luxurious", pos: "Adjective", syllables: "lux · u · ri · ous", meaning: "奢華的；豪華的" },
+      { id: "a23", word: "personal", pos: "Adjective", syllables: "per · son · al", meaning: "個人的；私人的" },
+      { id: "a24", word: "profitable", pos: "Adjective", syllables: "prof · it · a · ble", meaning: "有利可圖的；賺錢的" },
+      { id: "a25", word: "quality", pos: "Adjective", syllables: "qual · i · ty", meaning: "優質的；高質素的" },
+      { id: "a26", word: "recyclable", pos: "Adjective", syllables: "re · cy · cla · ble", meaning: "可回收再造的" },
+      { id: "a27", word: "regular", pos: "Adjective", syllables: "reg · u · lar", meaning: "定期的；常規的" },
+      { id: "a28", word: "relevant", pos: "Adjective", syllables: "rel · e · vant", meaning: "相關的；切題的" },
+      { id: "a29", word: "similar", pos: "Adjective", syllables: "sim · i · lar", meaning: "相似的；類似的" },
+      { id: "a30", word: "unreliable", pos: "Adjective", syllables: "un · re · li · a · ble", meaning: "不可靠的；靠不住的" },
+
+      // --- VERBS (27 unique; 'manage' deduplicated, 'reward' linked with Noun) ---
+      { id: "v1", word: "attend", pos: "Verb", syllables: "at · tend", meaning: "出席；參加" },
+      { id: "v2", word: "boost", pos: "Verb", syllables: "boost", meaning: "促進；提高；增強" },
+      { id: "v3", word: "choose", pos: "Verb", syllables: "choose", meaning: "選擇；挑選" },
+      { id: "v4", word: "encourage", pos: "Verb", syllables: "en · cour · age", meaning: "鼓勵；激勵" },
+      { id: "v5", word: "enhance", pos: "Verb", syllables: "en · hance", meaning: "提升；增強；改善" },
+      { id: "v6", word: "exceed", pos: "Verb", syllables: "ex · ceed", meaning: "超過；超越" },
+      { id: "v7", word: "increase", pos: "Verb", syllables: "in · crease", meaning: "增加；提高" },
+      { id: "v8", word: "interact", pos: "Verb", syllables: "in · ter · act", meaning: "互動；交流" },
+      { id: "v9", word: "lack", pos: "Verb", syllables: "lack", meaning: "缺乏；不足" },
+      { id: "v10", word: "lower", pos: "Verb", syllables: "low · er", meaning: "降低；減低" },
+      { id: "v11", word: "manage", pos: "Verb", syllables: "man · age", meaning: "管理；設法做到" },
+      { id: "v12", word: "prefer", pos: "Verb", syllables: "pre · fer", meaning: "較喜歡；寧願" },
+      { id: "v13", word: "prepare", pos: "Verb", syllables: "pre · pare", meaning: "準備；預備" },
+      { id: "v14", word: "recognise", pos: "Verb", syllables: "rec · og · nise", meaning: "認出；認可；表揚" },
+      { id: "v15", word: "allow", pos: "Verb", syllables: "al · low", meaning: "允許；准許" },
+      { id: "v16", word: "develop", pos: "Verb", syllables: "de · vel · op", meaning: "發展；開發；培養" },
+      { id: "v17", word: "distribute", pos: "Verb", syllables: "dis · trib · ute", meaning: "分發；分銷；派發" },
+      { id: "v18", word: "launch", pos: "Verb", syllables: "launch", meaning: "推出；發起；啟動" },
+      { id: "v20", word: "meet", pos: "Verb", syllables: "meet", meaning: "滿足（需求）；會面" },
+      { id: "v21", word: "monitor", pos: "Verb", syllables: "mon · i · tor", meaning: "監察；監控" },
+      { id: "v22", word: "obtain", pos: "Verb", syllables: "ob · tain", meaning: "獲得；取得" },
+      { id: "v23", word: "produce", pos: "Verb", syllables: "pro · duce", meaning: "生產；製造" },
+      { id: "v24", word: "protect", pos: "Verb", syllables: "pro · tect", meaning: "保護；防護" },
+      { id: "v25", word: "reduce", pos: "Verb", syllables: "re · duce", meaning: "減少；降低" },
+      { id: "v26", word: "reserve", pos: "Verb", syllables: "re · serve", meaning: "預訂；保留" },
+      { id: "v27", word: "reward", pos: "Verb", syllables: "re · ward", meaning: "獎勵；酬謝", dualNote: true },
+      { id: "v28", word: "showcase", pos: "Verb", syllables: "show · case", meaning: "展示；展現" },
+
+      // --- PREPOSITIONS (2) ---
+      { id: "p1", word: "within", pos: "Preposition", syllables: "with · in", meaning: "在……之內；不超過" },
+      { id: "p2", word: "among", pos: "Preposition", syllables: "a · mong", meaning: "在……之中" }
+    ];
+
+    const ENCOURAGEMENTS = [
+      "Take it one word at a time—listen clearly, speak aloud, and move every word into Mastered!",
+      "Tip: Pay attention to endings like '-tion', '-ment', and '-able'—they give great clues about Parts of Speech!",
+      "Pronunciation tip: Use Slow (0.65x) to hear every syllable clearly—including the first syllable of 'accessory' (ac·ces·so·ry)!",
+      "Consistency beats cramming! Even 5 minutes of Meaning Match or POS Sprint a day builds lasting memory.",
+      "Notice how 'reward' can be both a Noun (獎勵；報酬) and a Verb (獎勵；酬謝)!"
+    ];
+
+    // POS Badge Color Definitions
+    const POS_BADGE_STYLES = {
+      Noun: "bg-[#FEF3C7] text-[#B45309]",
+      Adjective: "bg-[#FFEDD5] text-[#C2410C]",
+      Verb: "bg-[#FEE2E2] text-[#B91C1C]",
+      Preposition: "bg-[#E0E7FF] text-[#3730A3]"
+    };
+
+    // =========================================================================
+    // STATE & LOCAL STORAGE
+    // =========================================================================
+    const STORAGE_KEY = "ve2b_ia_vocab_master_ven2302_v1";
+
+    let state = {
+      xp: 0,
+      masteredIds: new Set(),
+      sprintBest: 0,
+      matchScore: 0
+    };
+
+    // Runtime UI & Mode State
+    let currentMode = "study";
+    let currentPOSFilter = "All";
+    let studyIndex = 0;
+    let isMeaningHidden = false;
+    let encouragementIndex = 0;
+
+    // Sprint State
+    let currentSprintWord = VOCAB_DATA[0];
+    let sprintStreak = 0;
+    let sprintLocked = false;
+    let sprintTimer = null;
+
+    // Match State
+    let currentMatchWord = VOCAB_DATA[0];
+    let matchLocked = false;
+    let matchTimer = null;
+
+    // Word List State
+    let listStatusFilter = "all"; // 'all' | 'mastered' | 'learning'
+    let listPOSFilter = "All";    // 'All' | 'Noun' | 'Adjective' | 'Verb' | 'Preposition'
+    let resetConfirmPending = false;
+    let resetConfirmTimeout = null;
+
+    // Speech Synthesis & Recognition State
+    let selectedVoice = null;
+    let activeRecognition = null;
+    let isRecognizing = false;
+    let toastTimeout = null;
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          state.xp = typeof parsed.xp === "number" ? parsed.xp : 0;
+          state.masteredIds = new Set(Array.isArray(parsed.masteredIds) ? parsed.masteredIds : []);
+          state.sprintBest = typeof parsed.sprintBest === "number" ? parsed.sprintBest : 0;
+          state.matchScore = typeof parsed.matchScore === "number" ? parsed.matchScore : 0;
+        }
+      } catch (err) {
+        // Fallback cleanly if storage is restricted in sandbox/iframe
+        console.warn("LocalStorage unavailable, using in-memory session state.", err);
+      }
+    }
+
+    function saveState() {
+      try {
+        const payload = {
+          xp: state.xp,
+          masteredIds: Array.from(state.masteredIds),
+          sprintBest: state.sprintBest,
+          matchScore: state.matchScore
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+      } catch (err) {
+        // Ignore storage write errors in restricted contexts
+      }
+    }
+
+    // =========================================================================
+    // HEADER STATS & TOAST HELPERS
+    // =========================================================================
+    function updateHeaderStats() {
+      const total = VOCAB_DATA.length;
+      const masteredCount = state.masteredIds.size;
+      const learningCount = Math.max(0, total - masteredCount);
+
+      document.getElementById("xp-display").textContent = state.xp;
+      document.getElementById("mastered-display").textContent = masteredCount;
+      document.getElementById("total-display").textContent = total;
+      document.getElementById("learning-display").textContent = learningCount;
+
+      document.getElementById("sprint-best").textContent = state.sprintBest;
+      document.getElementById("match-score").textContent = state.matchScore;
+
+      // Update Word List stats if present
+      const listStatMastered = document.getElementById("list-stat-mastered");
+      const listStatLearning = document.getElementById("list-stat-learning");
+      const filterCountMastered = document.getElementById("filter-count-mastered");
+      const filterCountLearning = document.getElementById("filter-count-learning");
+
+      if (listStatMastered) listStatMastered.textContent = masteredCount;
+      if (listStatLearning) listStatLearning.textContent = learningCount;
+      if (filterCountMastered) filterCountMastered.textContent = masteredCount;
+      if (filterCountLearning) filterCountLearning.textContent = learningCount;
+    }
+
+    function showToast(icon, message) {
+      const toastBox = document.getElementById("toast-box");
+      const toastIcon = document.getElementById("toast-icon");
+      const toastMsg = document.getElementById("toast-msg");
+
+      toastIcon.textContent = icon;
+      toastMsg.textContent = message;
+
+      toastBox.classList.remove("hidden");
+      toastBox.classList.add("flex", "animate-pop");
+
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toastBox.classList.add("hidden");
+        toastBox.classList.remove("flex", "animate-pop");
+      }, 2800);
+    }
+
+    function newEncouragement() {
+      encouragementIndex = (encouragementIndex + 1) % ENCOURAGEMENTS.length;
+      document.getElementById("encouragement-text").textContent = ENCOURAGEMENTS[encouragementIndex];
+    }
+
+    function addXP(amount) {
+      state.xp = Math.max(0, state.xp + amount);
+      saveState();
+      updateHeaderStats();
+    }
+
+    // =========================================================================
+    // WEB SPEECH API: PRONUNCIATION (TTS) & SPEECH RECOGNITION (STT)
+    // =========================================================================
+    function initVoices() {
+      if (!("speechSynthesis" in window)) {
+        const tag = document.getElementById("audio-source-tag");
+        if (tag) tag.textContent = "🔇 Browser audio synthesis unavailable";
+        return;
+      }
+
+      const pickVoice = () => {
+        const voices = window.speechSynthesis.getVoices();
+        if (!voices || voices.length === 0) return;
+
+        // Prefer clear, natural English voices
+        selectedVoice =
+          voices.find(v => /Google UK English Female|Google US English|Microsoft Jenny|Samantha|Daniel/i.test(v.name)) ||
+          voices.find(v => /^en(-|_)(GB|US)/i.test(v.lang)) ||
+          voices.find(v => /^en/i.test(v.lang)) ||
+          voices[0];
+
+        const tag = document.getElementById("audio-source-tag");
+        if (tag && selectedVoice) {
+          tag.textContent = `🔊 Voice Ready: ${selectedVoice.name.replace(/Microsoft |Google /g, "")}`;
+        }
+      };
+
+      pickVoice();
+      if (typeof window.speechSynthesis.onvoiceschanged !== "undefined") {
+        window.speechSynthesis.onvoiceschanged = pickVoice;
+      }
+    }
+
+    function playPronunciation(text, rate = 1.0) {
+      if (!("speechSynthesis" in window)) {
+        showToast("🔇", "Audio playback is not supported in this browser.");
+        return;
+      }
+
+      try {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        if (selectedVoice) {
+          utterance.voice = selectedVoice;
+        }
+        utterance.lang = (selectedVoice && selectedVoice.lang) ? selectedVoice.lang : "en-GB";
+        utterance.rate = rate;
+        utterance.pitch = 1.0;
+        window.speechSynthesis.speak(utterance);
+      } catch (err) {
+        showToast("⚠️", "Could not play audio on this device.");
+      }
+    }
+
+    function speakCurrentWord(rate = 1.0) {
+      const list = getFilteredVocab();
+      const item = list[studyIndex] || VOCAB_DATA[0];
+      playPronunciation(item.word, rate);
+    }
+
+    function normalizeSpokenText(str) {
+      return (str || "")
+        .toLowerCase()
+        .replace(/[-–—]/g, " ")
+        .replace(/[^a-z\s]/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    // Simple Levenshtein distance for lenient pronunciation matching (e.g., British/US spelling or slight STT variance)
+    function levenshteinDistance(a, b) {
+      const matrix = Array.from({ length: a.length + 1 }, () => new Array(b.length + 1).fill(0));
+      for (let i = 0; i <= a.length; i++) matrix[i][0] = i;
+      for (let j = 0; j <= b.length; j++) matrix[0][j] = j;
+
+      for (let i = 1; i <= a.length; i++) {
+        for (let j = 1; j <= b.length; j++) {
+          const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+          matrix[i][j] = Math.min(
+            matrix[i - 1][j] + 1,
+            matrix[i][j - 1] + 1,
+            matrix[i - 1][j - 1] + cost
+          );
+        }
+      }
+      return matrix[a.length][b.length];
+    }
+
+    function isPronunciationMatch(spokenRaw, targetWord) {
+      const spoken = normalizeSpokenText(spokenRaw);
+      const target = normalizeSpokenText(targetWord);
+      if (!spoken) return false;
+      if (spoken === target || spoken.includes(target)) return true;
+
+      // Handle British/American spelling variants like recognise / recognize
+      const targetAlt = target.replace(/ise$/, "ize");
+      if (spoken === targetAlt || spoken.includes(targetAlt)) return true;
+
+      // Allow 1-character edit distance for words >= 5 letters
+      const words = spoken.split(" ");
+      for (const w of words) {
+        if (target.length >= 5 && levenshteinDistance(w, target) <= 1) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    function stopActiveRecognition() {
+      if (activeRecognition && isRecognizing) {
+        try {
+          activeRecognition.abort();
+        } catch (e) {}
+      }
+      isRecognizing = false;
+      const micBtn = document.getElementById("mic-btn");
+      if (micBtn) {
+        micBtn.classList.remove("mic-active");
+        micBtn.innerHTML = `<span>🎙️</span> Speak &amp; Check`;
+      }
+    }
+
+    function startPronunciationCheck() {
+      const feedbackEl = document.getElementById("pronounce-feedback");
+      const micBtn = document.getElementById("mic-btn");
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+      if (!SpeechRecognition) {
+        feedbackEl.innerHTML = `<span class="text-[#B45309]">🎙️ Speech recognition is not supported in this browser (try Chrome or Edge), or click "Mark as Mastered" below!</span>`;
+        showToast("ℹ️", "Speech recognition unavailable in this browser.");
+        return;
+      }
+
+      if (isRecognizing) {
+        stopActiveRecognition();
+        feedbackEl.innerHTML = `<span class="text-[#6E5D5D]">Microphone stopped.</span>`;
+        return;
+      }
+
+      const list = getFilteredVocab();
+      const targetItem = list[studyIndex] || VOCAB_DATA[0];
+
+      try {
+        const recognition = new SpeechRecognition();
+        activeRecognition = recognition;
+        recognition.lang = "en-US";
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 3;
+
+        recognition.onstart = () => {
+          isRecognizing = true;
+          micBtn.classList.add("mic-active");
+          micBtn.innerHTML = `<span>🛑</span> Listening...`;
+          feedbackEl.innerHTML = `<span class="text-[#D32F2F]">🎙️ Speak clearly now: say "<strong>${targetItem.word}</strong>"...</span>`;
+        };
+
+        recognition.onresult = (event) => {
+          const transcripts = [];
+          for (let i = 0; i < event.results[0].length; i++) {
+            transcripts.push(event.results[0][i].transcript);
+          }
+          const primaryHeard = transcripts[0] || "";
+          const matched = transcripts.some(t => isPronunciationMatch(t, targetItem.word));
+
+          if (matched) {
+            const wasMastered = state.masteredIds.has(targetItem.id);
+            if (!wasMastered) {
+              state.masteredIds.add(targetItem.id);
+              addXP(10);
+              feedbackEl.innerHTML = `<span class="text-[#388E3C]">🎉 Spot on! You said "${primaryHeard}" — Word Mastered (+10 XP)!</span>`;
+              showToast("🌻", `"${targetItem.word}" mastered! +10 XP`);
+            } else {
+              addXP(3);
+              feedbackEl.innerHTML = `<span class="text-[#388E3C]">🌟 Great pronunciation ("${primaryHeard}")! (+3 XP practice bonus)</span>`;
+            }
+            renderStudyCard();
+          } else {
+            feedbackEl.innerHTML = `<span class="text-[#C2410C]">👂 Heard: "<em>${primaryHeard}</em>". Listen to Slow (0.65x) and try saying "<strong>${targetItem.word}</strong>" again!</span>`;
+          }
+        };
+
+        recognition.onerror = (event) => {
+          if (event.error === "not-allowed" || event.error === "service-not-allowed") {
+            feedbackEl.innerHTML = `<span class="text-[#D32F2F]">🔒 Microphone access was blocked. Please allow mic permissions in your browser settings.</span>`;
+          } else if (event.error === "no-speech") {
+            feedbackEl.innerHTML = `<span class="text-[#B45309]">🤫 No speech detected. Click "Speak & Check" and speak closer to your mic.</span>`;
+          } else if (event.error !== "aborted") {
+            feedbackEl.innerHTML = `<span class="text-[#B45309]">⚠️ Mic error (${event.error}). Please try again!</span>`;
+          }
+        };
+
+        recognition.onend = () => {
+          isRecognizing = false;
+          micBtn.classList.remove("mic-active");
+          micBtn.innerHTML = `<span>🎙️</span> Speak &amp; Check`;
+        };
+
+        recognition.start();
+      } catch (err) {
+        isRecognizing = false;
+        feedbackEl.innerHTML = `<span class="text-[#D32F2F]">⚠️ Could not start microphone. Please check browser permissions.</span>`;
+      }
+    }
+
+    // =========================================================================
+    // NAVIGATION & POS FILTERING
+    // =========================================================================
+    function getFilteredVocab() {
+      if (currentPOSFilter === "All") return VOCAB_DATA;
+      return VOCAB_DATA.filter(item => item.pos === currentPOSFilter);
+    }
+
+    function switchMode(mode) {
+      stopActiveRecognition();
+      if (sprintTimer) clearTimeout(sprintTimer);
+      if (matchTimer) clearTimeout(matchTimer);
+
+      currentMode = mode;
+
+      // Update Mode Tabs UI
+      const modes = ["study", "sprint", "match", "list"];
+      modes.forEach(m => {
+        const tab = document.getElementById(`tab-${m}`);
+        const view = document.getElementById(`view-${m}`);
+        if (m === mode) {
+          tab.className = "mode-tab active bg-[#F26B3A] text-white border-2 border-[#F26B3A] py-3 px-4 rounded-2xl font-extrabold text-sm sm:text-base flex items-center justify-center gap-2 transition shadow-sm cursor-pointer";
+          view.classList.remove("hidden");
+        } else {
+          tab.className = "mode-tab bg-white text-[#2D2424] border-2 border-[#F0E4D7] hover:border-[#F26B3A] py-3 px-4 rounded-2xl font-extrabold text-sm sm:text-base flex items-center justify-center gap-2 transition cursor-pointer";
+          view.classList.add("hidden");
+        }
+      });
+
+      // Toggle global POS Filter Bar visibility:
+      // Shown on Study & Meaning Match; hidden on POS Sprint (tests all POS) and Word List (has built-in filters)
+      const posFilterBar = document.getElementById("pos-filter-bar");
+      if (mode === "sprint" || mode === "list") {
+        posFilterBar.classList.add("hidden");
+      } else {
+        posFilterBar.classList.remove("hidden");
+      }
+
+      // Initialize the chosen view
+      if (mode === "study") {
+        renderStudyCard();
+      } else if (mode === "sprint") {
+        nextSprintQuestion();
+      } else if (mode === "match") {
+        nextMatchQuestion();
+      } else if (mode === "list") {
+        renderWordList();
+      }
+    }
+
+    function setPOSFilter(pos) {
+      stopActiveRecognition();
+      currentPOSFilter = pos;
+      studyIndex = 0;
+
+      // Update filter button styles
+      const allPOS = ["All", "Noun", "Adjective", "Verb", "Preposition"];
+      const baseClasses = {
+        All: "bg-[#EFE6DD] text-[#2D2424]",
+        Noun: "bg-[#FEF3C7] text-[#B45309]",
+        Adjective: "bg-[#FFEDD5] text-[#C2410C]",
+        Verb: "bg-[#FEE2E2] text-[#B91C1C]",
+        Preposition: "bg-[#E0E7FF] text-[#3730A3]"
+      };
+
+      allPOS.forEach(p => {
+        const btn = document.getElementById(`filter-${p}`);
+        if (!btn) return;
+        if (p === pos) {
+          btn.className = `pos-filter-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-extrabold border-2 border-[#2D2424] ${baseClasses[p]} transition cursor-pointer`;
+        } else {
+          btn.className = `pos-filter-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-extrabold border-2 border-transparent ${baseClasses[p]} opacity-85 hover:opacity-100 transition cursor-pointer`;
+        }
+      });
+
+      if (currentMode === "study") {
+        document.getElementById("pronounce-feedback").innerHTML = "";
+        renderStudyCard();
+      } else if (currentMode === "match") {
+        nextMatchQuestion();
+      }
+    }
+
+    // =========================================================================
+    // MODE 1: STUDY & SPEAK LOGIC
+    // =========================================================================
+    function renderStudyCard() {
+      const list = getFilteredVocab();
+      if (studyIndex >= list.length) studyIndex = 0;
+      if (studyIndex < 0) studyIndex = list.length - 1;
+
+      const item = list[studyIndex];
+      const isMastered = state.masteredIds.has(item.id);
+
+      // POS Badge
+      const posBadge = document.getElementById("study-pos-badge");
+      posBadge.textContent = item.pos;
+      posBadge.className = `px-3.5 py-1 rounded-full text-xs sm:text-sm font-extrabold ${POS_BADGE_STYLES[item.pos] || POS_BADGE_STYLES.Noun}`;
+
+      // Stage Badge
+      const stageBadge = document.getElementById("study-stage-badge");
+      if (isMastered) {
+        stageBadge.textContent = "🌻 Mastered";
+        stageBadge.className = "px-3 py-1 rounded-full text-xs font-extrabold bg-[#F2FBF2] border border-[#B7E1B9] text-[#388E3C]";
+      } else {
+        stageBadge.textContent = "🌱 Still Learning";
+        stageBadge.className = "px-3 py-1 rounded-full text-xs font-extrabold bg-[#FFF8F0] border border-[#FFD2B8] text-[#B45309]";
+      }
+
+      // Counter
+      document.getElementById("study-counter").textContent = `${studyIndex + 1} of ${list.length}`;
+
+      // Dual POS Note
+      const dualNoteEl = document.getElementById("dual-pos-note");
+      if (item.dualNote) {
+        dualNoteEl.classList.remove("hidden");
+      } else {
+        dualNoteEl.classList.add("hidden");
+      }
+
+      // Word & Syllables
+      document.getElementById("study-word").textContent = item.word;
+      document.getElementById("study-syllables").textContent = item.syllables;
+
+      // Chinese Meaning & Hide/Show State
+      const meaningEl = document.getElementById("study-meaning");
+      const maskedEl = document.getElementById("study-meaning-masked");
+      const toggleBtn = document.getElementById("toggle-meaning-btn");
+
+      meaningEl.textContent = item.meaning;
+      if (isMeaningHidden) {
+        meaningEl.classList.add("hidden");
+        maskedEl.classList.remove("hidden");
+        toggleBtn.textContent = "👁️ Show Meaning";
+      } else {
+        meaningEl.classList.remove("hidden");
+        maskedEl.classList.add("hidden");
+        toggleBtn.textContent = "👁️ Hide Meaning (Self-Test)";
+      }
+
+      // Mark Mastered Button State
+      const markBtn = document.getElementById("mark-bloomed-btn");
+      if (isMastered) {
+        markBtn.innerHTML = `✅ Mastered (Click to Unmark)`;
+        markBtn.className = "bg-[#388E3C] hover:bg-[#2E7D32] text-white border-2 border-[#388E3C] px-4 py-3 rounded-2xl font-extrabold text-sm transition cursor-pointer";
+      } else {
+        markBtn.innerHTML = `🌻 Mark as Mastered (+10 XP)`;
+        markBtn.className = "bg-[#F2FBF2] hover:bg-[#E1F5E1] text-[#388E3C] border-2 border-[#B7E1B9] px-4 py-3 rounded-2xl font-extrabold text-sm transition cursor-pointer";
+      }
+    }
+
+    function toggleMeaningVisibility() {
+      isMeaningHidden = !isMeaningHidden;
+      renderStudyCard();
+    }
+
+    function prevCard() {
+      stopActiveRecognition();
+      const list = getFilteredVocab();
+      studyIndex = (studyIndex - 1 + list.length) % list.length;
+      document.getElementById("pronounce-feedback").innerHTML = "";
+      renderStudyCard();
+    }
+
+    function nextCard() {
+      stopActiveRecognition();
+      const list = getFilteredVocab();
+      studyIndex = (studyIndex + 1) % list.length;
+      document.getElementById("pronounce-feedback").innerHTML = "";
+      renderStudyCard();
+    }
+
+    function toggleManualMastery() {
+      const list = getFilteredVocab();
+      const item = list[studyIndex];
+      if (!item) return;
+
+      if (state.masteredIds.has(item.id)) {
+        state.masteredIds.delete(item.id);
+        saveState();
+        updateHeaderStats();
+        showToast("🌱", `"${item.word}" moved back to Still Learning.`);
+      } else {
+        state.masteredIds.add(item.id);
+        addXP(10);
+        showToast("🌻", `"${item.word}" marked as Mastered! +10 XP`);
+      }
+      renderStudyCard();
+    }
+
+    // =========================================================================
+    // MODE 2: PART OF SPEECH SPRINT LOGIC
+    // =========================================================================
+    function pickRandomItem(pool, excludeId = null) {
+      if (pool.length <= 1) return pool[0];
+      let candidate;
+      let attempts = 0;
+      do {
+        candidate = pool[Math.floor(Math.random() * pool.length)];
+        attempts++;
+      } while (candidate.id === excludeId && attempts < 10);
+      return candidate;
+    }
+
+    function nextSprintQuestion() {
+      sprintLocked = false;
+      currentSprintWord = pickRandomItem(VOCAB_DATA, currentSprintWord ? currentSprintWord.id : null);
+
+      document.getElementById("sprint-word").textContent = currentSprintWord.word;
+      document.getElementById("sprint-syllables").textContent = currentSprintWord.syllables;
+      document.getElementById("sprint-feedback").innerHTML = "";
+
+      const buttons = document.querySelectorAll(".sprint-choice-btn");
+      buttons.forEach(btn => {
+        btn.disabled = false;
+        btn.classList.remove("opacity-50", "ring-4", "ring-[#388E3C]", "ring-[#D32F2F]");
+      });
+    }
+
+    function submitSprintAnswer(chosenPOS) {
+      if (sprintLocked) return;
+      sprintLocked = true;
+
+      const feedbackEl = document.getElementById("sprint-feedback");
+      // Check if word matches chosenPOS (also allow 'reward' as both Noun and Verb since it's in both lists)
+      const isCorrect =
+        currentSprintWord.pos === chosenPOS ||
+        (currentSprintWord.word === "reward" && (chosenPOS === "Noun" || chosenPOS === "Verb"));
+
+      const buttons = document.querySelectorAll(".sprint-choice-btn");
+      buttons.forEach(btn => {
+        btn.disabled = true;
+        if (!btn.textContent.includes(chosenPOS) && !btn.textContent.includes(currentSprintWord.pos)) {
+          btn.classList.add("opacity-50");
+        }
+      });
+
+      if (isCorrect) {
+        sprintStreak += 1;
+        if (sprintStreak > state.sprintBest) {
+          state.sprintBest = sprintStreak;
+        }
+        const earnedXP = 5 + Math.min(sprintStreak, 10);
+        addXP(earnedXP);
+
+        document.getElementById("sprint-streak").textContent = sprintStreak;
+        document.getElementById("sprint-best").textContent = state.sprintBest;
+
+        const extraNote = currentSprintWord.dualNote ? ` ("reward" is both Noun & Verb!)` : "";
+        feedbackEl.innerHTML = `<span class="text-[#388E3C]">✅ Correct! "${currentSprintWord.word}" (${currentSprintWord.meaning}) is a ${currentSprintWord.pos}${extraNote} +${earnedXP} XP</span>`;
+      } else {
+        sprintStreak = 0;
+        document.getElementById("sprint-streak").textContent = sprintStreak;
+        feedbackEl.innerHTML = `<span class="text-[#D32F2F]">❌ Not quite! "${currentSprintWord.word}" (${currentSprintWord.meaning}) is classified as a <strong>${currentSprintWord.pos}</strong>.</span>`;
+      }
+
+      sprintTimer = setTimeout(() => {
+        nextSprintQuestion();
+      }, 1500);
+    }
+
+    // =========================================================================
+    // MODE 3: MEANING MATCH QUIZ LOGIC
+    // =========================================================================
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function nextMatchQuestion() {
+      matchLocked = false;
+      const filteredPool = getFilteredVocab();
+      const questionPool = filteredPool.length >= 4 ? filteredPool : VOCAB_DATA;
+
+      currentMatchWord = pickRandomItem(questionPool, currentMatchWord ? currentMatchWord.id : null);
+
+      document.getElementById("match-word").textContent = currentMatchWord.word;
+      const posBadge = document.getElementById("match-pos-badge");
+      posBadge.textContent = currentMatchWord.pos;
+      posBadge.className = `px-3 py-1 rounded-full text-xs font-extrabold ${POS_BADGE_STYLES[currentMatchWord.pos] || POS_BADGE_STYLES.Noun}`;
+      document.getElementById("match-feedback").innerHTML = "";
+
+      // Pick 3 distinct Chinese meaning distractors from the full dataset
+      const distractorPool = VOCAB_DATA.filter(
+        item => item.id !== currentMatchWord.id && item.meaning !== currentMatchWord.meaning
+      );
+      const shuffledDistractors = shuffleArray(distractorPool);
+      const distractors = [];
+      const seenMeanings = new Set([currentMatchWord.meaning]);
+
+      for (const item of shuffledDistractors) {
+        if (!seenMeanings.has(item.meaning)) {
+          seenMeanings.add(item.meaning);
+          distractors.push(item);
+          if (distractors.length === 3) break;
+        }
+      }
+
+      const options = shuffleArray([currentMatchWord, ...distractors]);
+      const optionsContainer = document.getElementById("match-options");
+      optionsContainer.innerHTML = "";
+
+      options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "match-opt-btn p-4 rounded-2xl border-2 border-[#F0E4D7] bg-[#FFFBF5] hover:border-[#F26B3A] hover:bg-[#FFF4E8] text-[#2D2424] font-black text-lg sm:text-xl transition transform hover:-translate-y-0.5 cursor-pointer shadow-sm";
+        btn.textContent = opt.meaning;
+        btn.dataset.meaning = opt.meaning;
+        btn.onclick = () => submitMatchAnswer(btn, opt.meaning);
+        optionsContainer.appendChild(btn);
+      });
+    }
+
+    function submitMatchAnswer(clickedBtn, chosenMeaning) {
+      if (matchLocked) return;
+      matchLocked = true;
+
+      const isCorrect = chosenMeaning === currentMatchWord.meaning;
+      const feedbackEl = document.getElementById("match-feedback");
+      const allBtns = document.querySelectorAll(".match-opt-btn");
+
+      allBtns.forEach(btn => {
+        btn.disabled = true;
+        if (btn.dataset.meaning === currentMatchWord.meaning) {
+          btn.className = "match-opt-btn p-4 rounded-2xl border-2 border-[#388E3C] bg-[#F2FBF2] text-[#388E3C] font-black text-lg sm:text-xl shadow-sm";
+        } else if (btn === clickedBtn && !isCorrect) {
+          btn.className = "match-opt-btn p-4 rounded-2xl border-2 border-[#D32F2F] bg-[#FEF2F2] text-[#D32F2F] font-black text-lg sm:text-xl shadow-sm";
+        } else {
+          btn.classList.add("opacity-50");
+        }
+      });
+
+      if (isCorrect) {
+        state.matchScore += 1;
+        addXP(8);
+        document.getElementById("match-score").textContent = state.matchScore;
+        feedbackEl.innerHTML = `<span class="text-[#388E3C]">🎯 Exact match! "${currentMatchWord.word}" = ${currentMatchWord.meaning} (+8 XP)</span>`;
+      } else {
+        feedbackEl.innerHTML = `<span class="text-[#D32F2F]">❌ Not quite — "${currentMatchWord.word}" means <strong>${currentMatchWord.meaning}</strong>.</span>`;
+      }
+
+      matchTimer = setTimeout(() => {
+        nextMatchQuestion();
+      }, 1500);
+    }
+
+    // =========================================================================
+    // MODE 4: WORD PROGRESS LIST & MASTERY TRACKER
+    // =========================================================================
+    function setListStatusFilter(status) {
+      listStatusFilter = status;
+
+      const styles = {
+        all: status === "all"
+          ? "status-filter-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-extrabold bg-[#2D2424] text-white transition cursor-pointer"
+          : "status-filter-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-extrabold bg-[#F5EFEA] text-[#2D2424] border border-[#E6D5C3] transition cursor-pointer",
+        mastered: status === "mastered"
+          ? "status-filter-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-extrabold bg-[#388E3C] text-white border border-[#388E3C] transition cursor-pointer"
+          : "status-filter-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-extrabold bg-[#F2FBF2] text-[#388E3C] border border-[#B7E1B9] transition cursor-pointer",
+        learning: status === "learning"
+          ? "status-filter-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-extrabold bg-[#B45309] text-white border border-[#B45309] transition cursor-pointer"
+          : "status-filter-btn px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-extrabold bg-[#FFF8F0] text-[#B45309] border border-[#FFD2B8] transition cursor-pointer"
+      };
+
+      document.getElementById("status-filter-all").className = styles.all;
+      document.getElementById("status-filter-mastered").className = styles.mastered;
+      document.getElementById("status-filter-learning").className = styles.learning;
+
+      renderWordList();
+    }
+
+    function setListPOSFilter(pos) {
+      listPOSFilter = pos;
+      const allPOS = ["All", "Noun", "Adjective", "Verb", "Preposition"];
+      const baseClasses = {
+        All: "bg-[#EFE6DD] text-[#2D2424]",
+        Noun: "bg-[#FEF3C7] text-[#B45309]",
+        Adjective: "bg-[#FFEDD5] text-[#C2410C]",
+        Verb: "bg-[#FEE2E2] text-[#B91C1C]",
+        Preposition: "bg-[#E0E7FF] text-[#3730A3]"
+      };
+
+      allPOS.forEach(p => {
+        const btn = document.getElementById(`list-pos-${p}`);
+        if (!btn) return;
+        if (p === pos) {
+          btn.className = `list-pos-btn px-3 py-1 rounded-full text-xs font-extrabold ${baseClasses[p]} border border-[#2D2424] cursor-pointer`;
+        } else {
+          btn.className = `list-pos-btn px-3 py-1 rounded-full text-xs font-extrabold ${baseClasses[p]} border border-transparent opacity-85 hover:opacity-100 cursor-pointer`;
+        }
+      });
+
+      renderWordList();
+    }
+
+    function toggleWordMasteryById(id, event) {
+      if (event) event.stopPropagation();
+      const item = VOCAB_DATA.find(v => v.id === id);
+      if (!item) return;
+
+      if (state.masteredIds.has(id)) {
+        state.masteredIds.delete(id);
+        saveState();
+        updateHeaderStats();
+        showToast("🌱", `"${item.word}" moved to Still Learning.`);
+      } else {
+        state.masteredIds.add(id);
+        addXP(10);
+        showToast("🌻", `"${item.word}" mastered! +10 XP`);
+      }
+
+      renderWordList();
+    }
+
+    function jumpToStudyWord(id) {
+      // Reset top POS filter to All so the exact index in VOCAB_DATA matches
+      setPOSFilter("All");
+      const idx = VOCAB_DATA.findIndex(v => v.id === id);
+      if (idx !== -1) {
+        studyIndex = idx;
+      }
+      switchMode("study");
+    }
+
+    function renderWordList() {
+      updateHeaderStats();
+      const container = document.getElementById("word-list-container");
+      const searchInput = document.getElementById("list-search");
+      const query = (searchInput ? searchInput.value : "").trim().toLowerCase();
+
+      const filtered = VOCAB_DATA.filter(item => {
+        const isMastered = state.masteredIds.has(item.id);
+        if (listStatusFilter === "mastered" && !isMastered) return false;
+        if (listStatusFilter === "learning" && isMastered) return false;
+        if (listPOSFilter !== "All" && item.pos !== listPOSFilter) return false;
+        if (query) {
+          const matchWord = item.word.toLowerCase().includes(query);
+          const matchMeaning = item.meaning.toLowerCase().includes(query);
+          if (!matchWord && !matchMeaning) return false;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-10 bg-[#FFFBF5] border-2 border-dashed border-[#F0E4D7] rounded-2xl">
+            <p class="text-lg font-extrabold text-[#6E5D5D]">No matching words found.</p>
+            <p class="text-xs font-bold text-[#6E5D5D] mt-1">Try clearing your search box or switching status/POS filters.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(item => {
+        const isMastered = state.masteredIds.has(item.id);
+        const posBadgeClass = POS_BADGE_STYLES[item.pos] || POS_BADGE_STYLES.Noun;
+        const rowBg = isMastered ? "bg-[#F9FDF9] border-[#CFEAD1]" : "bg-[#FFFBF5] border-[#F0E4D7]";
+        const statusBtnClass = isMastered
+          ? "bg-[#F2FBF2] hover:bg-[#E1F5E1] text-[#388E3C] border border-[#B7E1B9]"
+          : "bg-[#FFF8F0] hover:bg-[#FFEEDB] text-[#B45309] border border-[#FFD2B8]";
+        const statusLabel = isMastered ? "🌻 Mastered" : "🌱 Still Learning";
+
+        return `
+          <div onclick="jumpToStudyWord('${item.id}')" class="flex items-center justify-between gap-3 p-3.5 rounded-2xl border-2 ${rowBg} hover:border-[#F26B3A] transition cursor-pointer">
+            <div class="flex items-center gap-3 min-w-0">
+              <button type="button" onclick="event.stopPropagation(); playPronunciation('${item.word.replace(/'/g, "\\'")}', 1.0)" title="Listen to ${item.word}" class="w-9 h-9 rounded-xl bg-white border border-[#F0E4D7] hover:bg-[#FFF0E6] text-[#F26B3A] flex items-center justify-center shrink-0 transition cursor-pointer">
+                🔊
+              </button>
+              <div class="min-w-0">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span class="font-black text-base sm:text-lg text-[#2D2424] truncate">${item.word}</span>
+                  <span class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold ${posBadgeClass}">${item.pos}</span>
+                </div>
+                <div class="text-xs sm:text-sm font-bold text-[#6E5D5D] truncate mt-0.5">
+                  ${item.meaning}
+                </div>
+              </div>
+            </div>
+
+            <button type="button" onclick="toggleWordMasteryById('${item.id}', event)" class="px-3 py-1.5 rounded-xl text-xs font-extrabold shrink-0 transition cursor-pointer ${statusBtnClass}">
+              ${statusLabel}
+            </button>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function resetProgressConfirm() {
+      const btn = document.getElementById("reset-progress-btn");
+      if (!resetConfirmPending) {
+        resetConfirmPending = true;
+        btn.textContent = "Click again to confirm reset";
+        btn.className = "self-start sm:self-auto text-xs font-extrabold bg-[#D32F2F] text-white border-2 border-[#D32F2F] px-3.5 py-2 rounded-xl transition cursor-pointer";
+        showToast("⚠️", "Click 'Reset Progress' again within 4s to clear all progress.");
+
+        if (resetConfirmTimeout) clearTimeout(resetConfirmTimeout);
+        resetConfirmTimeout = setTimeout(() => {
+          resetConfirmPending = false;
+          btn.textContent = "Reset Progress";
+          btn.className = "self-start sm:self-auto text-xs font-extrabold text-[#6E5D5D] hover:text-[#D32F2F] border-2 border-[#E6D5C3] px-3.5 py-2 rounded-xl transition cursor-pointer";
+        }, 4000);
+        return;
+      }
+
+      // Execute reset
+      if (resetConfirmTimeout) clearTimeout(resetConfirmTimeout);
+      resetConfirmPending = false;
+      btn.textContent = "Reset Progress";
+      btn.className = "self-start sm:self-auto text-xs font-extrabold text-[#6E5D5D] hover:text-[#D32F2F] border-2 border-[#E6D5C3] px-3.5 py-2 rounded-xl transition cursor-pointer";
+
+      state.xp = 0;
+      state.masteredIds.clear();
+      state.sprintBest = 0;
+      state.matchScore = 0;
+      sprintStreak = 0;
+      saveState();
+
+      document.getElementById("sprint-streak").textContent = "0";
+      updateHeaderStats();
+      renderStudyCard();
+      renderWordList();
+      showToast("🔄", "All progress and XP have been reset.");
+    }
+
+    // =========================================================================
+    // INITIALIZATION
+    // =========================================================================
+    window.addEventListener("DOMContentLoaded", () => {
+      loadState();
+      initVoices();
+      updateHeaderStats();
+      renderStudyCard();
+    });
+  </script>
+</body>
+</html>
